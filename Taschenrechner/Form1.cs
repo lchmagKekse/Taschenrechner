@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Data;
 using System.Windows.Forms;
 
 namespace Taschenrechner
@@ -23,58 +23,6 @@ namespace Taschenrechner
             return false;
         }
 
-        public static double ParseMathString(string mathString)
-        {
-            string[] operators = { "+", "-", "*", "/" };
-            string[] tokens = mathString.Split(operators, StringSplitOptions.RemoveEmptyEntries);
-
-            List<double> operands = new List<double>();
-            foreach (string token in tokens)
-            {
-                if (double.TryParse(token, out double operand))
-                {
-                    operands.Add(operand);
-                    continue;
-                }
-                    throw new ArgumentException("Invalid operand: " + token);
-            }
-
-            double result = operands[0];
-            for (int i = 0; i < operators.Length; i++)
-            {
-                string op = operators[i];
-                string[] subtokens = mathString.Split(op[0]);
-
-                for (int j = 0; j < subtokens.Length - 1; j++)
-                {
-                    double num1 = operands[j];
-                    double num2 = operands[j + 1];
-
-                    switch (op)
-                    {
-                        case "+":
-                            result = num1 + num2;
-                            break;
-                        case "-":
-                            result = num1 - num2;
-                            break;
-                        case "*":
-                            result = num1 * num2;
-                            break;
-                        case "/":
-                            result = num1 / num2;
-                            break;
-                        default:
-                            throw new ArgumentException("Invalid operator: " + op);
-                    }
-
-                    operands[j + 1] = result;
-                }
-            }
-
-            return result;
-        }
-
         private void NumberClick(object sender, EventArgs e)
         {
             string senderName = ((Button)sender).Name;
@@ -93,10 +41,10 @@ namespace Taschenrechner
 
         private void OperandClick(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(TxtB.Text)) return;
-            if (CheckForOperator()) TxtB.Text = TxtB.Text.Remove(TxtB.Text.Length - 1);
-
             string senderName = ((Button)sender).Name;
+
+            if (CheckForOperator()) TxtB.Text = TxtB.Text.Remove(TxtB.Text.Length - 1);
+            if (string.IsNullOrWhiteSpace(TxtB.Text) && senderName != "BtnSub") return;       
 
             if (senderName == "BtnDiv") TxtB.Text += '/';
             if (senderName == "BtnMul") TxtB.Text += '*';
@@ -104,21 +52,42 @@ namespace Taschenrechner
             if (senderName == "BtnAdd") TxtB.Text += '+';
         }
 
-        private void BtnClearE_Click(object sender, EventArgs e)
+        private void ClearInputField(object sender, EventArgs e)
         {
             TxtB.Text = string.Empty;
         }
 
-        private void BtnClear_Click(object sender, EventArgs e)
+        private void ClearLastInput(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(TxtB.Text)) return;
 
             TxtB.Text = TxtB.Text.Remove(TxtB.Text.Length - 1);
         }
 
-        private void BtnSolve_Click(object sender, EventArgs e)
+        private void SolveExpression(object sender, EventArgs e)
         {
-            TxtB.Text = ParseMathString(TxtB.Text).ToString();
+            if (string.IsNullOrWhiteSpace(TxtB.Text)) return;
+
+            DataTable table = new DataTable();
+
+            try
+            {
+                var result = Convert.ToString(table.Compute(TxtB.Text, ""));
+                TxtB.Text = result.Replace(',', '.');
+            }
+            catch
+            {
+                TxtB.Text = "Syntax Error :(";
+            }
+        }
+
+        private void DotClick(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(TxtB.Text)) return;
+            if (CheckForOperator()) return;
+            if (TxtB.Text[TxtB.TextLength - 1] == '.') return;
+
+            TxtB.Text += '.';
         }
     }
 }

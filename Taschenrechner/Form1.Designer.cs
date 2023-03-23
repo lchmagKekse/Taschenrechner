@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.TxtB = new System.Windows.Forms.TextBox();
             this.Btn1 = new System.Windows.Forms.Button();
             this.Btn3 = new System.Windows.Forms.Button();
@@ -46,15 +47,16 @@
             this.btnSolve = new System.Windows.Forms.Button();
             this.BtnClearE = new System.Windows.Forms.Button();
             this.BtnClear = new System.Windows.Forms.Button();
+            this.BtnDot = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // TxtB
             // 
             this.TxtB.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TxtB.Location = new System.Drawing.Point(11, 12);
+            this.TxtB.Location = new System.Drawing.Point(12, 12);
             this.TxtB.Name = "TxtB";
             this.TxtB.ReadOnly = true;
-            this.TxtB.Size = new System.Drawing.Size(274, 32);
+            this.TxtB.Size = new System.Drawing.Size(273, 32);
             this.TxtB.TabIndex = 0;
             this.TxtB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -230,43 +232,56 @@
             // 
             this.btnSolve.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnSolve.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSolve.Location = new System.Drawing.Point(67, 218);
+            this.btnSolve.Location = new System.Drawing.Point(235, 162);
             this.btnSolve.Name = "btnSolve";
-            this.btnSolve.Size = new System.Drawing.Size(106, 50);
+            this.btnSolve.Size = new System.Drawing.Size(50, 106);
             this.btnSolve.TabIndex = 16;
             this.btnSolve.Text = "=";
             this.btnSolve.UseVisualStyleBackColor = true;
-            this.btnSolve.Click += new System.EventHandler(this.BtnSolve_Click);
+            this.btnSolve.Click += new System.EventHandler(this.SolveExpression);
             // 
             // BtnClearE
             // 
             this.BtnClearE.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.BtnClearE.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnClearE.Location = new System.Drawing.Point(235, 162);
+            this.BtnClearE.Location = new System.Drawing.Point(235, 50);
             this.BtnClearE.Name = "BtnClearE";
             this.BtnClearE.Size = new System.Drawing.Size(50, 106);
             this.BtnClearE.TabIndex = 17;
             this.BtnClearE.Text = "CE";
             this.BtnClearE.UseVisualStyleBackColor = true;
-            this.BtnClearE.Click += new System.EventHandler(this.BtnClearE_Click);
+            this.BtnClearE.Click += new System.EventHandler(this.ClearInputField);
             // 
             // BtnClear
             // 
             this.BtnClear.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.BtnClear.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnClear.Location = new System.Drawing.Point(235, 50);
+            this.BtnClear.Location = new System.Drawing.Point(123, 218);
             this.BtnClear.Name = "BtnClear";
-            this.BtnClear.Size = new System.Drawing.Size(50, 106);
+            this.BtnClear.Size = new System.Drawing.Size(50, 50);
             this.BtnClear.TabIndex = 18;
             this.BtnClear.Text = "C";
             this.BtnClear.UseVisualStyleBackColor = true;
-            this.BtnClear.Click += new System.EventHandler(this.BtnClear_Click);
+            this.BtnClear.Click += new System.EventHandler(this.ClearLastInput);
+            // 
+            // BtnDot
+            // 
+            this.BtnDot.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.BtnDot.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnDot.Location = new System.Drawing.Point(67, 218);
+            this.BtnDot.Name = "BtnDot";
+            this.BtnDot.Size = new System.Drawing.Size(50, 50);
+            this.BtnDot.TabIndex = 19;
+            this.BtnDot.Text = ".";
+            this.BtnDot.UseVisualStyleBackColor = true;
+            this.BtnDot.Click += new System.EventHandler(this.DotClick);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(294, 277);
+            this.ClientSize = new System.Drawing.Size(296, 278);
+            this.Controls.Add(this.BtnDot);
             this.Controls.Add(this.BtnClear);
             this.Controls.Add(this.BtnClearE);
             this.Controls.Add(this.btnSolve);
@@ -285,8 +300,11 @@
             this.Controls.Add(this.Btn3);
             this.Controls.Add(this.Btn1);
             this.Controls.Add(this.TxtB);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Taschenrechner";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -312,6 +330,7 @@
         private System.Windows.Forms.Button btnSolve;
         private System.Windows.Forms.Button BtnClearE;
         private System.Windows.Forms.Button BtnClear;
+        private System.Windows.Forms.Button BtnDot;
     }
 }
 
